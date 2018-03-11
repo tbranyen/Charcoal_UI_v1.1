@@ -1,0 +1,12 @@
+<Bindings>
+	<Binding name="CH_OPTIONS" runOnUp="true" header="CHARCOAL">
+		if (keystate == "down") then
+			Charcoal_Slash_Handler("cho");
+		end
+	</Binding>
+	<Binding name="CH_MOVABLES" runOnUp="true">
+		if (keystate == "down") then
+			Charcoal_ToggleMovables("RightButton");
+		end
+	</Binding>
+</Bindings>

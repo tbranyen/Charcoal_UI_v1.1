@@ -1,0 +1,352 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+
+
+	<!-- Charcoal Background Template Frame Panel -->
+	<Frame name="Charcoal_BGTemplate" parent="UIParent" enableMouse="false" frameStrata="BACKGROUND" virtual="true">
+		<Backdrop name="$parentBackdrop" bgFile="Interface\AddOns\Charcoal\Images\BackDrop.tga" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>	
+		<Size>
+			<AbsDimension x="256" y="256"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOM">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+	</Frame>
+
+	<!-- Options Frame Panel -->
+	<Frame name="Charcoal_OptionsPanelTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="460" y="455"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPRIGHT">
+				<Offset>
+					<AbsDimension x="-15" y="-30"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropBorderColor(0.7, 0.7, 0.7);
+				this:SetBackdropColor(0, 0, 0, 1);
+			</OnLoad>
+			<OnShow>
+				Charcoal_OptionsPanel_OnShow();
+			</OnShow>
+		</Scripts>
+	</Frame>
+
+	<!-- Options Tab Button -->
+	<Button name="Charcoal_OptionsTabButtonTemplate" inherits="GameMenuButtonTemplate" virtual="true">
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Size>
+			<AbsDimension x="150" y="26" />
+		</Size>
+		<Scripts>
+			<OnEnter>
+				Charcoal_OptionsTabButton_OnEnter();
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+			<OnClick>
+				Charcoal_OptionsTabButton_OnClick();
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- Options Tab Text -->
+	<Frame name="Charcoal_OptionsTabTextTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="300" y="20"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="GameFontNormal" text="pickles">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="TOP"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+
+	<!-- Template for checkbuttons -->
+	<CheckButton name="Charcoal_OptionsCheckButtonTemplate" inherits="UICheckButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="24" y="26"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text" inherits="GameFontNormal" text="" justifyH="left">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+				Charcoal_OptionsCheck_OnEnter();
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				CharcoalCheckButton_OnClick();
+			</OnClick>
+		</Scripts>
+	</CheckButton>
+
+	<EditBox name="CH_SliderEditBoxTemplate" letters="4" autoFocus="false" inherits="InputBoxTemplate" justifyH="CENTER" frameStrata="HIGH" virtual="true">
+		<Size><AbsDimension x="40" y="20"/></Size>
+		<Anchors>
+			<Anchor point="LEFT" relativePoint="RIGHT">
+				<Offset><AbsDimension x="5" y="0"/></Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnLoad>
+				this:SetTextColor(1,1,1);
+			</OnLoad>
+			<OnEscapePressed>
+				this:SetText(this:GetParent():GetValue());
+				this:ClearFocus();
+			</OnEscapePressed>
+		</Scripts>
+	</EditBox>
+
+	<!-- Template for sliders -->	
+	<Slider name="Charcoal_OptionsSliderTemplate" inherits="OptionsSliderTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="150" y="18"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text" inherits="GameFontNormal" text="" justifyH="left">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="$parent_Display" inherits="CH_SliderEditBoxTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="9" y="-3" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnterPressed>
+						Charcoal_OptionsSlider_UpdateFromEditBox();
+					</OnEnterPressed>
+				</Scripts>
+			</EditBox>
+		</Frames>
+		<Scripts>
+			<OnValueChanged>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				Charcoal_OptionsSlider_OnValueChanged();
+			</OnValueChanged>
+			<OnEnter>
+				Charcoal_OptionsSlider_OnEnter();
+			</OnEnter>
+			<OnLeave>
+				Charcoal_OptionsSlider_OnLeave();
+			</OnLeave>
+		</Scripts>
+	</Slider>
+
+	<!-- Template for push buttons -->
+	<Button name="Charcoal_OptionsButtonTemplate" inherits="GameMenuButtonTemplate" text="" virtual="true">
+		<Scripts>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				Charcoal_OptionsButtonOnClick();
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- Template for dropdown menus -->
+	<Frame name="Charcoal_OptionsDropDownTemplate" inherits="UIDropDownMenuTemplate" virtual="true">
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+							<Offset>
+								<AbsDimension x="20" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+
+	<Button name="Charcoal_OptionsColourButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="20" y="20"/>
+		</Size>
+				
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_BorderTexture">
+					<Size>
+						<AbsDimension x="17" y="17"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<Color r="1.0" g="1.0" b="1.0"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="GameFontNormal" text="">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="4" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick>
+				UIDropDownMenuButton_OpenColorPicker(this);
+				ColorPickerFrame:Show();
+				ColorPickerFrame:SetFrameStrata("DIALOG")
+				ColorPickerFrame:ClearAllPoints();
+				ColorPickerFrame:SetPoint("RIGHT", "Charcoal_OptionsFrame", "LEFT", -10, 0);
+			</OnClick>
+			<OnEnter>
+				getglobal(this:GetName().."_BorderTexture"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+			</OnEnter>
+			<OnLeave>
+				getglobal(this:GetName().."_BorderTexture"):SetVertexColor(.341, .341, .341);
+			</OnLeave>
+		</Scripts>
+		
+		<NormalTexture name="$parent_SwatchTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+	</Button>
+
+	<EditBox name="Charcoal_OptionsEditBoxTemplate" letters="1000" autoFocus="false" inherits="InputBoxTemplate" virtual="true">
+		<Scripts>
+			<OnEscapePressed>
+				if (this.prevvalue) then
+					this:SetText(this.prevvalue);
+				else
+					this:SetText("");
+				end
+				this:ClearFocus();
+			</OnEscapePressed>
+		</Scripts>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Label" inherits="GameFontNormal">
+					<Color r="1.0" g="1.0" b="1.0"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+							<Offset><AbsDimension x="-5" y="0"/></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</EditBox>
+
+	<Button name="Charcoal_MenuControlTemplate" inherits="DiscordLib_TooltipBackdropTemplate" virtual="true" frameStrata="HIGH">
+		<Frames>
+			<Button name="$parent_Button">
+				<Size><AbsDimension x="32" y="32"/></Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT">
+						<Offset><AbsDimension x="-29" y="-1"/></Offset>
+					</Anchor>
+				</Anchors>
+				<HitRectInsets>
+					<AbsInset left="6" right="6" top="7" bottom="7"/>
+				</HitRectInsets>
+				<Scripts>
+					<OnClick>
+						DL_Show_Menu(1);
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\MainMenuBar\UI-MainMenu-ScrollDownButton-Up"/>
+				<PushedTexture file="Interface\MainMenuBar\UI-MainMenu-ScrollDownButton-Down"/>
+				<DisabledTexture file="Interface\Buttons\UI-ScrollBar-ScrollDownButton-Disabled"/>
+				<HighlightTexture alphaMode="ADD" file="Interface\MainMenuBar\UI-MainMenu-ScrollDownButton-Highlight"/>
+			</Button>		
+		</Frames>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Label" inherits="GameFontNormal">
+					<Color r="1.0" g="0.82" b="0.0"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+							<Offset><AbsDimension x="3" y="0"/></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parent_Setting" inherits="GameFontNormal">
+					<Color r="1.0" g="1.0" b="1.0"/>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset><AbsDimension x="3" y="0"/></Offset>
+						</Anchor>
+						<Anchor point="RIGHT">
+							<Offset><AbsDimension x="-20" y="0"/></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick>
+				DL_Show_Menu();
+			</OnClick>
+		</Scripts>
+	</Button>
+
+</Ui>

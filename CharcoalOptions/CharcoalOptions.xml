@@ -1,0 +1,1765 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+
+	<Script file="CharcoalOptions.lua"/>
+	<Include file="CharcoalOptionsTemplates.xml"/>
+	
+
+	<!-- Charcoal Options Frame -->
+	<Frame name="Charcoal_OptionsFrame" frameStrata="HIGH" parent="UIParent" hidden="true" toplevel="true" movable="true" enableMouse="true">
+		<Size>
+			<AbsDimension x="640" y="503" />
+		</Size>
+		<Anchors>
+			<Anchor point="TOP">
+				<Offset>
+					<AbsDimension x="0" y="-150" relativePoint="TOP"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnShow>
+				Charcoal_OptionsFrame_OnShow();
+			</OnShow>
+			<OnHide>
+				Charcoal_OptionsFrame_OnHide();
+			</OnHide>
+		</Scripts>
+		<Backdrop name="Charcoal_OptionsFrameBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="Charcoal_OptionsFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="320" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="Charcoal_OptionsFrameHeaderText" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="Charcoal_OptionsFrameHeader">
+							<Offset>
+								<AbsDimension x="0" y="-14"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnMouseDown>
+				if ( arg1 == "LeftButton" ) then
+					this:StartMoving();
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				if ( arg1 == "LeftButton" ) then
+					this:StopMovingOrSizing();
+				end
+			</OnMouseUp>
+		</Scripts>
+	
+		<Frames>
+			<Button name="Charcoal_DropMenu" inherits="DL_DropMenuTemplate" parent="Charcoal_OptionsFrame"/>
+
+
+			<Button name="Charcoal_OptionsCloseButton" inherits="UIPanelCloseButton">
+			 <Anchors>
+				<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+				    <Offset>
+					   <AbsDimension x="-10" y="-5"/>
+				    </Offset>
+				</Anchor>
+			 </Anchors>
+			 <Scripts>
+				<OnClick>
+				    Charcoal_OptionsFrame:Hide();
+				</OnClick>
+			 </Scripts>
+			</Button>
+
+			<!-- General options panel -->
+			<Frame name="Charcoal_OptionsGeneral" hidden="false" inherits="Charcoal_OptionsPanelTemplate" id="1">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsGeneral" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>
+
+					<CheckButton name="Charcoal_OptionsGeneralCheck_1" inherits="Charcoal_OptionsCheckButtonTemplate" id="1">
+					    <Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-40"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<Slider name="Charcoal_OptionsGeneralSlider_1" inherits="Charcoal_OptionsSliderTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsGeneralCheck_1" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="190" y="-10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<CheckButton name="Charcoal_OptionsGeneralCheck_2" inherits="Charcoal_OptionsCheckButtonTemplate" id="2">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsGeneralCheck_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsGeneralCheck_3" inherits="Charcoal_OptionsCheckButtonTemplate" id="3">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsGeneralCheck_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<Button name="$parent_AutoThreatPage" inherits="Charcoal_MenuControlTemplate">
+						<Size><AbsDimension x="150" y="24"/></Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="Charcoal_OptionsGeneralCheck_3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="190" y="-3" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetBackdropColor(0.1, 0.1, 0.1);
+								this:SetBackdropBorderColor(0.6, 0.6, 0.6);
+								this.menu = "Charcoal_DropMenu";
+								this.table = "CH_GN_AUTOTHREATPAGENUMS";
+								this.index = "General";
+								this.subindex = "AutoThreatPage";
+								this.initFunc = function() end;
+								DL_Set_Label(CH_GENERAL_OPTIONS.AutoThreatPage.label);
+							</OnLoad>
+						</Scripts>
+					</Button>
+
+					<Slider name="Charcoal_OptionsGeneralSlider_2" inherits="Charcoal_OptionsSliderTemplate" id="2">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsGeneralCheck_3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="2" y="-35" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+				</Frames>
+			</Frame>
+
+			<!-- XP Bar option panel -->
+			<Frame name="Charcoal_OptionsXPBar" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="2">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsXPBar" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>
+
+					<ScrollFrame name="$parentScrollFrame" inherits="UIPanelScrollFrameTemplate">
+						<Size>
+							<AbsDimension x="430" y="405"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-40"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+
+						<ScrollChild>
+							<Frame name="$parentScrollChildFrame">
+								<Size>
+									<AbsDimension x="410" y="400"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT"/>
+								</Anchors>
+								<Frames>
+									<Button name="Charcoal_OptionsXPBar_XPDropDown" inherits="Charcoal_MenuControlTemplate">
+										<Size><AbsDimension x="150" y="24"/></Size>
+									    <Anchors>
+											<Anchor point="TOPLEFT">
+												<Offset>
+													<AbsDimension x="10" y="-15"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetBackdropColor(0.1, 0.1, 0.1);
+												this:SetBackdropBorderColor(0.6, 0.6, 0.6);
+												this.menu = "Charcoal_DropMenu";
+												this.table = "CH_XP_XPBARLOCATIONS";
+												this.index = "XPBar";
+												this.subindex = "XPBarLocation";
+												this.initFunc = CH_InitUI;
+												DL_Set_Label(CH_XP_OPTIONS.XPBarLocation.label);
+											</OnLoad>
+										</Scripts>
+									</Button>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_1" inherits="Charcoal_OptionsSliderTemplate" id="1">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBar_XPDropDown" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="2" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_2" inherits="Charcoal_OptionsSliderTemplate" id="2">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_OptionsXPBarSlider_1" relativePoint="RIGHT">
+												<Offset>
+													<AbsDimension x="70" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_3" inherits="Charcoal_OptionsSliderTemplate" id="3">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBarSlider_1" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_4" inherits="Charcoal_OptionsSliderTemplate" id="4">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_OptionsXPBarSlider_3" relativePoint="RIGHT">
+												<Offset>
+													<AbsDimension x="70" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Button name="Charcoal_OptionsXPBarColour_1" inherits="Charcoal_OptionsColourButtonTemplate" id="1">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBarSlider_3" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="2" y="-35"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Button name="Charcoal_OptionsXPBarColour_2" inherits="Charcoal_OptionsColourButtonTemplate" id="2">
+										<Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_OptionsXPBarColour_1" relativePoint="RIGHT">
+												<Offset>
+													<AbsDimension x="198" y="0"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_5" inherits="Charcoal_OptionsSliderTemplate" id="5">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBarColour_1" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="-2" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_6" inherits="Charcoal_OptionsSliderTemplate" id="6">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_OptionsXPBarSlider_5" relativePoint="RIGHT">
+												<Offset>
+													<AbsDimension x="70" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Button name="Charcoal_OptionsXPBarColour_3" inherits="Charcoal_OptionsColourButtonTemplate" id="3">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBarSlider_5" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="2" y="-35"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_7" inherits="Charcoal_OptionsSliderTemplate" id="7">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBarColour_3" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="220" y="15" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Button name="Charcoal_OptionsXPBarColour_4" inherits="Charcoal_OptionsColourButtonTemplate" id="4">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBarColour_3" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_8" inherits="Charcoal_OptionsSliderTemplate" id="8">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBarColour_4" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="220" y="15" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Button name="Charcoal_OptionsXPBar_XPTextDropDown" inherits="Charcoal_MenuControlTemplate">
+										<Size><AbsDimension x="150" y="24"/></Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBarColour_4" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="-2" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetBackdropColor(0.1, 0.1, 0.1);
+												this:SetBackdropBorderColor(0.6, 0.6, 0.6);
+												this.menu = "Charcoal_DropMenu";
+												this.table = "CH_XP_XPTEXTLOCATIONS";
+												this.index = "XPBar";
+												this.subindex = "XPTextLocation";
+												this.initFunc = CH_InitXPBar;
+												DL_Set_Label(CH_XP_OPTIONS.XPTextLocation.label);
+											</OnLoad>
+										</Scripts>
+									</Button>
+
+									<CheckButton name="Charcoal_OptionsXPBarCheck_1" inherits="Charcoal_OptionsCheckButtonTemplate" id="1">
+									    <Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_OptionsXPBar_XPTextDropDown" relativePoint="RIGHT">
+												<Offset>
+													<AbsDimension x="70" y="-2"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_9" inherits="Charcoal_OptionsSliderTemplate" id="9">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsXPBar_XPTextDropDown" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsXPBarSlider_10" inherits="Charcoal_OptionsSliderTemplate" id="10">
+										<Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_OptionsXPBarSlider_9" relativePoint="RIGHT">
+												<Offset>
+													<AbsDimension x="73" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+
+								</Frames>
+							</Frame>
+						</ScrollChild>
+					</ScrollFrame>
+
+				</Frames>
+			</Frame>
+
+			<!-- Minimap options panel -->
+			<Frame name="Charcoal_OptionsMinimap" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="3">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsMinimap" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>
+
+					<CheckButton name="Charcoal_OptionsMinimapCheck_1" inherits="Charcoal_OptionsCheckButtonTemplate" id="1">
+					    <Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-40"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMinimapCheck_2" inherits="Charcoal_OptionsCheckButtonTemplate" id="2">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapCheck_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-5"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMinimapCheck_3" inherits="Charcoal_OptionsCheckButtonTemplate" id="3">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapCheck_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-5"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMinimapCheck_4" inherits="Charcoal_OptionsCheckButtonTemplate" id="4">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapCheck_3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-5"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMinimapCheck_5" inherits="Charcoal_OptionsCheckButtonTemplate" id="5">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapCheck_4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-5"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMinimapCheck_6" inherits="Charcoal_OptionsCheckButtonTemplate" id="6">
+					    <Anchors>
+							<Anchor point="LEFT" relativeTo="Charcoal_OptionsMinimapCheck_5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="197" y="-3"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<Button name="$parent_MiniMapDropDown" inherits="Charcoal_MenuControlTemplate">
+						<Size><AbsDimension x="150" y="24"/></Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapCheck_5" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-30" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetBackdropColor(0.1, 0.1, 0.1);
+								this:SetBackdropBorderColor(0.6, 0.6, 0.6);
+								this.menu = "Charcoal_DropMenu";
+								this.table = "CH_MM_LOCATIONS";	
+								this.index = "Minimap";
+								this.subindex = "Location";
+								this.initFunc = CH_InitUI;
+								DL_Set_Label(CH_MINIMAP_OPTIONS.Location.label);
+							</OnLoad>
+						</Scripts>
+					</Button>
+
+					<Slider name="Charcoal_OptionsMinimapSlider_1" inherits="Charcoal_OptionsSliderTemplate" id="1">
+						<Size>
+							<AbsDimension x="150" y="18"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_MiniMapDropDown" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="225" y="23" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<Slider name="Charcoal_OptionsMinimapSlider_2" inherits="Charcoal_OptionsSliderTemplate" id="2">
+						<Size>
+							<AbsDimension x="150" y="18"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_MiniMapDropDown" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="3" y="-35" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<Slider name="Charcoal_OptionsMinimapSlider_3" inherits="Charcoal_OptionsSliderTemplate" id="3">
+						<Size>
+							<AbsDimension x="150" y="18"/>
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="Charcoal_OptionsMinimapSlider_2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="73" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<Button name="Charcoal_OptionsMinimapColour_1" inherits="Charcoal_OptionsColourButtonTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapSlider_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</Button>
+
+					<Slider name="Charcoal_OptionsMinimapSlider_4" inherits="Charcoal_OptionsSliderTemplate" id="4">
+						<Size>
+							<AbsDimension x="150" y="18"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapColour_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="224" y="15" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<Button name="Charcoal_OptionsMinimapColour_2" inherits="Charcoal_OptionsColourButtonTemplate" id="2">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapColour_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</Button>
+
+					<Slider name="Charcoal_OptionsMinimapSlider_5" inherits="Charcoal_OptionsSliderTemplate" id="5">
+						<Size>
+							<AbsDimension x="150" y="18"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapColour_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="224" y="15" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<Slider name="Charcoal_OptionsMinimapSlider_6" inherits="Charcoal_OptionsSliderTemplate" id="6">
+						<Size>
+							<AbsDimension x="150" y="18"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMinimapColour_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-30" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<CheckButton name="Charcoal_OptionsMinimapCheck_7" inherits="Charcoal_OptionsCheckButtonTemplate" id="7">
+					    <Anchors>
+							<Anchor point="LEFT" relativeTo="Charcoal_OptionsMinimapSlider_6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="70" y="-5"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+				</Frames>
+			</Frame>
+
+
+			<!-- Action Bars option panel -->
+			<Frame name="Charcoal_OptionsActionBars" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="4">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsActionBars" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>
+
+					<ScrollFrame name="$parentScrollFrame" inherits="UIPanelScrollFrameTemplate">
+						<Size>
+							<AbsDimension x="430" y="405"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-40"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+
+						<ScrollChild>
+							<Frame name="$parentScrollChildFrame">
+								<Size>
+									<AbsDimension x="410" y="400"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT"/>
+								</Anchors>
+								<Frames>
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_1" inherits="Charcoal_OptionsCheckButtonTemplate" id="1">
+									    <Anchors>
+											<Anchor point="TOPLEFT">
+												<Offset>
+													<AbsDimension x="10" y="0"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_2" inherits="Charcoal_OptionsCheckButtonTemplate" id="2">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_1" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_12" inherits="Charcoal_OptionsCheckButtonTemplate" id="12">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_2" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_13" inherits="Charcoal_OptionsCheckButtonTemplate" id="13">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_12" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_14" inherits="Charcoal_OptionsCheckButtonTemplate" id="14">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_13" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_3" inherits="Charcoal_OptionsCheckButtonTemplate" id="3">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_14" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_4" inherits="Charcoal_OptionsCheckButtonTemplate" id="4">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_3" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_5" inherits="Charcoal_OptionsCheckButtonTemplate" id="5">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_4" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_6" inherits="Charcoal_OptionsCheckButtonTemplate" id="6">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_5" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_15" inherits="Charcoal_OptionsCheckButtonTemplate" id="15">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_6" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_16" inherits="Charcoal_OptionsCheckButtonTemplate" id="16">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_15" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_7" inherits="Charcoal_OptionsCheckButtonTemplate" id="7">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_16" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<Slider name="Charcoal_OptionsActionBarsSlider_1" inherits="Charcoal_OptionsSliderTemplate" id="1">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_7" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="5" y="-30" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsActionBarsSlider_2" inherits="Charcoal_OptionsSliderTemplate" id="2">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_OptionsActionBarsSlider_1" relativePoint="RIGHT">
+												<Offset>
+													<AbsDimension x="66" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_8" inherits="Charcoal_OptionsCheckButtonTemplate" id="8">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsSlider_1" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="-5" y="-22"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_9" inherits="Charcoal_OptionsCheckButtonTemplate" id="9">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_8" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<Slider name="Charcoal_OptionsActionBarsSlider_3" inherits="Charcoal_OptionsSliderTemplate" id="3">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_9" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="5" y="-30" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsActionBarsSlider_4" inherits="Charcoal_OptionsSliderTemplate" id="4">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_OptionsActionBarsSlider_3" relativePoint="RIGHT">
+												<Offset>
+													<AbsDimension x="66" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_10" inherits="Charcoal_OptionsCheckButtonTemplate" id="10">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsSlider_3" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="-5" y="-22"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<CheckButton name="Charcoal_OptionsActionBarsCheck_11" inherits="Charcoal_OptionsCheckButtonTemplate" id="11">
+									    <Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_10" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-10"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</CheckButton>
+
+									<Button name="Charcoal_PetUseDropDown" inherits="Charcoal_MenuControlTemplate">
+										<Size><AbsDimension x="150" y="24"/></Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsActionBarsCheck_11" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-30" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetBackdropColor(0.1, 0.1, 0.1);
+												this:SetBackdropBorderColor(0.6, 0.6, 0.6);
+												this.menu = "Charcoal_DropMenu";
+												this.table = "CH_AB_PETFLOATERUSES";	
+												this.index = "ActionBars";
+												this.subindex = "PetFloaterUse";
+												this.initFunc = CH_InitPetBar;
+												DL_Set_Label(CH_ACTIONBARS_OPTIONS.PetFloaterUse.label);
+											</OnLoad>
+										</Scripts>
+									</Button>
+
+
+									<Button name="Charcoal_PetPosDropDown" inherits="Charcoal_MenuControlTemplate">
+										<Size><AbsDimension x="150" y="24"/></Size>
+										<Anchors>
+											<Anchor point="LEFT" relativeTo="Charcoal_PetUseDropDown" relativePoint="LEFT">
+												<Offset>
+													<AbsDimension x="215" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetBackdropColor(0.1, 0.1, 0.1);
+												this:SetBackdropBorderColor(0.6, 0.6, 0.6);
+												this.menu = "Charcoal_DropMenu";
+												this.table = "CH_AB_PETFLOATERPOSS";
+												this.index = "ActionBars";
+												this.subindex = "PetFloaterPos";
+												this.initFunc = CH_InitPetBar;
+												DL_Set_Label(CH_ACTIONBARS_OPTIONS.PetFloaterPos.label);
+											</OnLoad>
+										</Scripts>
+									</Button>
+
+
+								</Frames>
+							</Frame>
+						</ScrollChild>
+					</ScrollFrame>
+
+
+				</Frames>
+			</Frame>
+
+			<!-- Unit Frames option panel -->
+			<Frame name="Charcoal_OptionsUnitFrames" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="5">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsUnitFrames" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>
+
+					<CheckButton name="Charcoal_OptionsUnitFramesCheck_1" inherits="Charcoal_OptionsCheckButtonTemplate" id="1">
+					    <Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-40"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsUnitFramesCheck_2" inherits="Charcoal_OptionsCheckButtonTemplate" id="2">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsUnitFramesCheck_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsUnitFramesCheck_3" inherits="Charcoal_OptionsCheckButtonTemplate" id="3">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsUnitFramesCheck_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsUnitFramesCheck_4" inherits="Charcoal_OptionsCheckButtonTemplate" id="4">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsUnitFramesCheck_3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+
+					<CheckButton name="Charcoal_OptionsUnitFramesCheck_5" inherits="Charcoal_OptionsCheckButtonTemplate" id="5">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsUnitFramesCheck_4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsUnitFramesCheck_6" inherits="Charcoal_OptionsCheckButtonTemplate" id="6">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsUnitFramesCheck_5" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsUnitFramesCheck_7" inherits="Charcoal_OptionsCheckButtonTemplate" id="7">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsUnitFramesCheck_7" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+				</Frames>
+
+			</Frame>
+
+
+			<!-- Thresholds option panel -->
+			<Frame name="Charcoal_OptionsThresholds" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="6">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsThresholds" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>
+
+					<CheckButton name="Charcoal_OptionsThresholdsCheck_1" inherits="Charcoal_OptionsCheckButtonTemplate" id="1">
+					    <Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-40"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<Slider name="Charcoal_OptionsThresholdsSlider_1" inherits="Charcoal_OptionsSliderTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsThresholdsCheck_1" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="200" y="-10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<CheckButton name="Charcoal_OptionsThresholdsCheck_2" inherits="Charcoal_OptionsCheckButtonTemplate" id="2">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsThresholdsCheck_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<Slider name="Charcoal_OptionsThresholdsSlider_2" inherits="Charcoal_OptionsSliderTemplate" id="2">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsThresholdsCheck_2" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="200" y="-10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<CheckButton name="Charcoal_OptionsThresholdsCheck_3" inherits="Charcoal_OptionsCheckButtonTemplate" id="3">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsThresholdsCheck_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<Slider name="Charcoal_OptionsThresholdsSlider_3" inherits="Charcoal_OptionsSliderTemplate" id="3">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsThresholdsCheck_3" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="200" y="-10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<CheckButton name="Charcoal_OptionsThresholdsCheck_4" inherits="Charcoal_OptionsCheckButtonTemplate" id="4">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsThresholdsCheck_3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<Slider name="Charcoal_OptionsThresholdsSlider_4" inherits="Charcoal_OptionsSliderTemplate" id="4">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsThresholdsCheck_4" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="200" y="-10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					
+				</Frames>
+
+			</Frame>
+
+
+			<!-- Backgrounds option panel -->
+			<Frame name="Charcoal_OptionsBackgrounds" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="7">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsBackgrounds" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>					
+
+					<ScrollFrame name="$parentScrollFrame" inherits="UIPanelScrollFrameTemplate">
+						<Size>
+							<AbsDimension x="430" y="405"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-40"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+
+						<ScrollChild>
+							<Frame name="$parentScrollChildFrame">
+								<Size>
+									<AbsDimension x="410" y="400"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT"/>
+								</Anchors>
+								<Frames>
+
+									<Frame name="Charcoal_MainBGHeader">
+										<Size>
+											<AbsDimension x="300" y="20"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT">
+												<Offset>
+													<AbsDimension x="20" y="0" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Layers>
+											<Layer level="ARTWORK">
+												<FontString name="Charcoal_MainBGHeaderText" inherits="GameFontNormal" justifyH="left" text="CH_MAIN_BG_HEADER">
+													<Anchors>
+														<Anchor point="TOPLEFT" relativePoint="TOPLEFT"/>
+													</Anchors>
+												</FontString>
+											</Layer>
+										</Layers>
+									</Frame>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_1" inherits="Charcoal_OptionsSliderTemplate" id="1">
+										<Size>
+											<AbsDimension x="360" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_MainBGHeader" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_2" inherits="Charcoal_OptionsSliderTemplate" id="2">
+										<Size>
+											<AbsDimension x="360" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsSlider_1" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Button name="Charcoal_OptionsBackgroundsColour_1" inherits="Charcoal_OptionsColourButtonTemplate" id="1">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsSlider_2" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="2" y="-35"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_3" inherits="Charcoal_OptionsSliderTemplate" id="3">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_1" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="208" y="15" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Button name="Charcoal_OptionsBackgroundsColour_2" inherits="Charcoal_OptionsColourButtonTemplate" id="2">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_1" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_4" inherits="Charcoal_OptionsSliderTemplate" id="4">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_2" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="208" y="15" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+									
+									<Slider name="Charcoal_OptionsBackgroundsSlider_5" inherits="Charcoal_OptionsSliderTemplate" id="5">
+										<Size>
+											<AbsDimension x="360" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_2" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="-2" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_6" inherits="Charcoal_OptionsSliderTemplate" id="6">
+										<Size>
+											<AbsDimension x="360" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsSlider_5" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_7" inherits="Charcoal_OptionsSliderTemplate" id="7">
+										<Size>
+											<AbsDimension x="360" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsSlider_6" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Frame name="Charcoal_LeftBGHeader">
+										<Size>
+											<AbsDimension x="300" y="20"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsSlider_7" relativePoint="TOPLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-50" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Layers>
+											<Layer level="ARTWORK">
+												<FontString name="Charcoal_LeftBGHeaderText" inherits="GameFontNormal" justifyH="left" text="CH_LEFT_BG_HEADER">
+													<Anchors>
+														<Anchor point="TOPLEFT">
+															<Offset>
+																<AbsDimension x="0" y="0" />
+															</Offset>					
+														</Anchor>
+													</Anchors>
+												</FontString>
+											</Layer>
+										</Layers>
+									</Frame>
+
+									<Button name="Charcoal_OptionsBackgroundsColour_3" inherits="Charcoal_OptionsColourButtonTemplate" id="3">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_LeftBGHeader" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-15"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_8" inherits="Charcoal_OptionsSliderTemplate" id="8">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_3" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="188" y="15" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Button name="Charcoal_OptionsBackgroundsColour_4" inherits="Charcoal_OptionsColourButtonTemplate" id="4">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_3" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_9" inherits="Charcoal_OptionsSliderTemplate" id="9">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_4" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="188" y="15" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+									
+									<Slider name="Charcoal_OptionsBackgroundsSlider_10" inherits="Charcoal_OptionsSliderTemplate" id="10">
+										<Size>
+											<AbsDimension x="340" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_4" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="-2" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Frame name="Charcoal_RightBGHeader">
+										<Size>
+											<AbsDimension x="300" y="20"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsSlider_10" relativePoint="TOPLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-50" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Layers>
+											<Layer level="ARTWORK">
+												<FontString name="Charcoal_RightBGHeaderText" inherits="GameFontNormal" justifyH="left" text="CH_RIGHT_BG_HEADER">
+													<Anchors>
+														<Anchor point="TOPLEFT">
+															<Offset>
+																<AbsDimension x="0" y="0" />
+															</Offset>					
+														</Anchor>
+													</Anchors>
+												</FontString>
+											</Layer>
+										</Layers>
+									</Frame>
+
+									<Button name="Charcoal_OptionsBackgroundsColour_5" inherits="Charcoal_OptionsColourButtonTemplate" id="5">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_RightBGHeader" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-15"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_11" inherits="Charcoal_OptionsSliderTemplate" id="11">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_5" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="188" y="15" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+									<Button name="Charcoal_OptionsBackgroundsColour_6" inherits="Charcoal_OptionsColourButtonTemplate" id="6">
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_5" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="0" y="-35"/>
+												</Offset>
+											</Anchor>
+									    </Anchors>
+									</Button>
+
+									<Slider name="Charcoal_OptionsBackgroundsSlider_12" inherits="Charcoal_OptionsSliderTemplate" id="12">
+										<Size>
+											<AbsDimension x="150" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_6" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="188" y="15" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+									
+									<Slider name="Charcoal_OptionsBackgroundsSlider_13" inherits="Charcoal_OptionsSliderTemplate" id="13">
+										<Size>
+											<AbsDimension x="340" y="18"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsBackgroundsColour_6" relativePoint="BOTTOMLEFT">
+												<Offset>
+													<AbsDimension x="-2" y="-35" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</Slider>
+
+
+
+								</Frames>
+							</Frame>
+						</ScrollChild>
+					</ScrollFrame>
+					
+				</Frames>
+
+			</Frame>
+
+			<!-- Movables option panel -->
+			<Frame name="Charcoal_OptionsMovables" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="8">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsMovables" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="-5" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>
+
+					<CheckButton name="Charcoal_OptionsMovablesCheck_1" inherits="Charcoal_OptionsCheckButtonTemplate" id="1">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovables" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="20" y="-35"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMovablesCheck_2" inherits="Charcoal_OptionsCheckButtonTemplate" id="2">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovablesCheck_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMovablesCheck_3" inherits="Charcoal_OptionsCheckButtonTemplate" id="3">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovablesCheck_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMovablesCheck_4" inherits="Charcoal_OptionsCheckButtonTemplate" id="4">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovablesCheck_3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					<CheckButton name="Charcoal_OptionsMovablesCheck_5" inherits="Charcoal_OptionsCheckButtonTemplate" id="5">
+					    <Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovablesCheck_4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</CheckButton>
+
+					
+					<Button name="Charcoal_OptionsMovablesColour_1" inherits="Charcoal_OptionsColourButtonTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovablesCheck_5" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</Button>
+
+					<Slider name="Charcoal_OptionsMovablesSlider_1" inherits="Charcoal_OptionsSliderTemplate" id="1">
+						<Size>
+							<AbsDimension x="150" y="18"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovablesColour_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="215" y="15" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+
+					<Button name="Charcoal_OptionsMovablesColour_2" inherits="Charcoal_OptionsColourButtonTemplate" id="2">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovablesColour_1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-35"/>
+								</Offset>
+							</Anchor>
+					    </Anchors>
+					</Button>
+
+					<Slider name="Charcoal_OptionsMovablesSlider_2" inherits="Charcoal_OptionsSliderTemplate" id="2">
+						<Size>
+							<AbsDimension x="150" y="18"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsMovablesColour_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="215" y="15" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+									
+				</Frames>
+
+			</Frame>
+
+
+			<!-- Profile option panel -->
+			<Frame name="Charcoal_OptionsProfiles" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="9">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsProfiles" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>
+
+					<EditBox name="$parent_NewProfile" inherits="Charcoal_OptionsEditBoxTemplate" frameStrata="DIALOG">
+						<Size><AbsDimension x="150" y="25"/></Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsProfiles" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="28" y="-90"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								CH_SetLabel(CH_CREATEPROFILE);
+							</OnLoad>
+							<OnEnterPressed>
+								CH_NewProfile(this:GetText());
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<Button inherits="UIPanelButtonTemplate" text="CH_CREATE">
+						<Size><AbsDimension x="100" y="24"/></Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_NewProfile" relativePoint="RIGHT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CH_NewProfile(Charcoal_OptionsProfiles_NewProfile:GetText());
+							</OnClick>
+						</Scripts>
+					</Button>
+					
+					<Button name="$parent_LoadProfile" inherits="Charcoal_MenuControlTemplate">
+						<Size><AbsDimension x="150" y="25"/></Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="Charcoal_OptionsProfiles" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="21" y="-150"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetBackdropColor(.1, .1, .1);
+								this:SetBackdropBorderColor(.6, .6, .6);
+								this.menu = "Charcoal_DropMenu";
+								this.table = "CH_PROFILES";
+								this.initFunc = function() end;
+								CH_SetLabel(CH_LOADPROFILE);
+							</OnLoad>
+							<OnShow>
+								CH_InitUI();
+							</OnShow>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Load" inherits="UIPanelButtonTemplate" text="CH_LOAD">
+						<Size><AbsDimension x="100" y="24"/></Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_LoadProfile" relativePoint="RIGHT">
+								<Offset><AbsDimension x="8" y="0"/></Offset>
+							</Anchor>>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CH_Load_Profile(Charcoal_OptionsProfiles_LoadProfile_Setting:GetText());
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button inherits="UIPanelButtonTemplate" text="CH_DELETE">
+						<Size><AbsDimension x="100" y="24"/></Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Load" relativePoint="RIGHT">
+								<Offset><AbsDimension x="8" y="0"/></Offset>
+							</Anchor>>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CH_Delete_Profile(Charcoal_OptionsProfiles_LoadProfile_Setting:GetText());
+							</OnClick>
+						</Scripts>
+					</Button>
+					
+				</Frames>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parent_CurrentProfile" inherits="GameFontNormal" text="Charcoal v1.1">
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset><AbsDimension x="22" y="-40"/></Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+
+			</Frame>
+
+
+			<!-- Movables option panel -->
+			<Frame name="Charcoal_OptionsTest" hidden="true" inherits="Charcoal_OptionsPanelTemplate" id="9">
+				<Frames>
+
+					<Frame name="$parent_" inherits="Charcoal_OptionsTabTextTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="Charcoal_OptionsTest" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Frame>			
+					
+				
+				</Frames>
+			</Frame>
+			
+			<!-- * END OPTIONS FRAMES * -->
+
+			<!-- Option Panel Tab Buttons -->
+			<Button name="Charcoal_OptionsGeneralTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+			<Button name="Charcoal_OptionsXPBarTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+			<Button name="Charcoal_OptionsMinimapTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+			<Button name="Charcoal_OptionsActionBarsTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+			<Button name="Charcoal_OptionsUnitFramesTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+			<Button name="Charcoal_OptionsThresholdsTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+			<Button name="Charcoal_OptionsBackgroundsTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+			<Button name="Charcoal_OptionsMovablesTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+			<Button name="Charcoal_OptionsProfilesTabButton" inherits="Charcoal_OptionsTabButtonTemplate"/>
+
+		</Frames>
+	</Frame>
+
+	
+</Ui>

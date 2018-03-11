@@ -1,0 +1,9 @@
+## Interface: 11100
+## Title: Charcoal UI
+## Notes: Custom Discord Configurations + Enhancements
+## Author: Crash <crashvegas@gmail.com>
+## Dependencies: DiscordLibrary, DiscordUnitFrames, DiscordActionBars
+## OptionalDeps: Titan
+## SavedVariables: CH_Config
+Charcoal.xml
+

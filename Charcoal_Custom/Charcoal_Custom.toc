@@ -1,0 +1,8 @@
+## Interface: 11000
+## Title: Charcoal UI Custom Extractor
+## Version: 1.0
+## Notes: An easy way to create a custom Charcoal file.
+## OptionalDeps: 
+## Dependencies: Charcoal
+## SavedVariables: CH_Extracted_Settings
+CHExtractor.xml
